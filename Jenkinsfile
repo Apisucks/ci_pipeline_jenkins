@@ -12,5 +12,10 @@ pipeline {
                 echo 'Build in progress from Repo'    
             }
         }
+        stage('Deploy') {
+            steps {
+                echo 'Deploy in progress from Repo'    
+            }
+        }
     }
 }
