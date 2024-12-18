@@ -41,7 +41,7 @@ pipeline {
                             script: "git tag --sort=-committerdate | head -1",
                             returnStdout: true
                         )
-                        echo '${tag}'
+                        echo "${tag}"
                     }
                 }
         }
