@@ -61,7 +61,7 @@ pipeline {
                     sh "git rev-parse HEAD"
                     script {
                         def currentHash = sh(
-                            script: "git rev-parse HEAD"
+                            script: "git rev-parse HEAD",
                             returnStdout: true
                         )
 
@@ -71,7 +71,7 @@ pipeline {
                         )
 
                         def latestTagHash = sh(
-                            script: "git rev-parse -n 1 ${latestTag}"
+                            script: "git rev-parse -n 1 ${latestTag}",
                             returnStdout: true
                         )
                         // sh "git rev-parse -n 1 ${latestTag}"
