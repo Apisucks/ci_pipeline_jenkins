@@ -36,11 +36,13 @@ pipeline {
                     //         userRemoteConfigs: [[url: 'https://github.com/Apisucks/ci_pipeline_jenkins.git']]
                     //     ])
                     // }
-                    def tag = sh(
-                        script: "git tag --sort=-committerdate | head -1",
-                        returnStdout: true
-                    )
-                    echo '${tag}'
+                    script {
+                        def tag = sh(
+                            script: "git tag --sort=-committerdate | head -1",
+                            returnStdout: true
+                        )
+                        echo '${tag}'
+                    }
                 }
         }
         stage('Build') {
