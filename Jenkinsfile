@@ -37,11 +37,16 @@ pipeline {
                     //     ])
                     // }
                     script {
-                        def tag = sh(
+                        def latestTag = sh(
                             script: "git tag --sort=-committerdate | head -1",
                             returnStdout: true
                         )
-                        echo "${tag}"
+                        echo "${latestTag}"
+                            // Checkout the latest tag
+                        checkout([$class: 'GitSCM',
+                            branches: [[name: "refs/tags/${latestTag}"]],
+                            userRemoteConfigs: [[url: 'https://github.com/Apisucks/ci_pipeline_jenkins.git']]
+                        ])
                     }
                 }
         }
