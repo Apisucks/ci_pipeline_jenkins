@@ -42,6 +42,10 @@ pipeline {
                             script: "git tag --sort=-committerdate | head -1",
                             returnStdout: true
                         )
+
+                        sh "git rev-parse -n 1 ${latestTag}"
+                        sh "git show-ref ${latestTag}"
+
                         echo "${latestTag}"
                             // Checkout the latest tag
                         checkout([$class: 'GitSCM',
