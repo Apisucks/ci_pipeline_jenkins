@@ -36,22 +36,56 @@ pipeline {
                     //         userRemoteConfigs: [[url: 'https://github.com/Apisucks/ci_pipeline_jenkins.git']]
                     //     ])
                     // }
+
+                    // /////////////////////////////////////////////////
+                    // sh "git rev-parse HEAD"
+                    // script {
+                    //     def latestTag = sh(
+                    //         script: "git tag --sort=-committerdate | head -1",
+                    //         returnStdout: true
+                    //     )
+
+                    //     sh "git rev-parse -n 1 ${latestTag}"
+                    //     sh "git show-ref ${latestTag}"
+
+                    //     echo "${latestTag}"
+                    //         // Checkout the latest tag
+                    //     checkout([$class: 'GitSCM',
+                    //         branches: [[name: "refs/tags/${latestTag}"]],
+                    //         userRemoteConfigs: [[url: 'https://github.com/Apisucks/ci_pipeline_jenkins.git']]
+                    //     ])
+                    // }
+                    // sh "git rev-parse HEAD"
+                    // ////////////////////////////////////////////////
+
                     sh "git rev-parse HEAD"
                     script {
+                        def currentHash = sh(
+                            script: "git rev-parse HEAD"
+                            returnStdout: true
+                        )
+
                         def latestTag = sh(
                             script: "git tag --sort=-committerdate | head -1",
                             returnStdout: true
                         )
 
-                        sh "git rev-parse -n 1 ${latestTag}"
-                        sh "git show-ref ${latestTag}"
+                        def latestTagHash = sh(
+                            script: "git rev-parse -n 1 ${latestTag}"
+                            returnStdout: true
+                        )
+                        // sh "git rev-parse -n 1 ${latestTag}"
+                        // sh "git show-ref ${latestTag}"
 
-                        echo "${latestTag}"
+                        // echo "${latestTag}"
                             // Checkout the latest tag
-                        checkout([$class: 'GitSCM',
-                            branches: [[name: "refs/tags/${latestTag}"]],
-                            userRemoteConfigs: [[url: 'https://github.com/Apisucks/ci_pipeline_jenkins.git']]
-                        ])
+                        if (${currentHash} == ${latestTagHash}) {
+                            checkout([$class: 'GitSCM',
+                                branches: [[name: "refs/tags/${latestTag}"]],
+                                userRemoteConfigs: [[url: 'https://github.com/Apisucks/ci_pipeline_jenkins.git']]
+                            ])
+                        }
+
                     }
                     sh "git rev-parse HEAD"
                 }
