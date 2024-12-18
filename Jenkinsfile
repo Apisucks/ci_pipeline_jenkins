@@ -79,7 +79,8 @@ pipeline {
 
                         // echo "${latestTag}"
                             // Checkout the latest tag
-                        if (${currentHash} == ${latestTagHash}) {
+                            
+                        if (currentHash.equalsIgnoreCase(latestTagHash)) {
                             checkout([$class: 'GitSCM',
                                 branches: [[name: "refs/tags/${latestTag}"]],
                                 userRemoteConfigs: [[url: 'https://github.com/Apisucks/ci_pipeline_jenkins.git']]
