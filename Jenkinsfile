@@ -53,6 +53,7 @@ pipeline {
         stage('Build') {
             steps {
                 echo 'Build in progress from Repo'    
+                sh "cat README.md"
             }
         }
         stage('Deploy') {
