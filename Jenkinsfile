@@ -12,11 +12,14 @@ pipeline {
                 steps {
                     script {
                         // Fetch tags and branches
+                        // def tags = sh(
+                        //     script: "git ls-remote --tags origin | awk '{print \$2}' | grep 'refs/tags/' | sed 's@refs/tags/@@' | sort -V",
+                        //     returnStdout: true
+                        // ).trim().split('\n')
                         def tags = sh(
-                            script: "git ls-remote --tags origin | awk '{print \$2}' | grep 'refs/tags/' | sed 's@refs/tags/@@' | sort -V",
+                            script: "git tag --sort=-committerdate | head -1",
                             returnStdout: true
                         ).trim().split('\n')
-
                         // (Optional) Filter tags for the specific branch if needed.
                         // Assuming a naming convention like `branch-name/v1.0.0`
                         def branch = 'main'
