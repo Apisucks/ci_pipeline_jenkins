@@ -5,8 +5,8 @@ pipeline {
         stage('Hello') {
             steps {
                 echo 'Hello World from Repo'
-                ctag=`git tag --sort=-committerdate | head -1`
-                git checkout $ctag
+                sh "ctag=`git tag --sort=-committerdate | head -1`
+                git checkout $ctag"
             }
         }
         stage('Build') {
